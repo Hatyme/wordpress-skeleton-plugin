@@ -8,11 +8,10 @@
     
     class Settings
     {
-        public $option_pages;
-        public $admin_pages;
-        public $sub_pages;
-        
-        public $settings;
+        private $option_pages;
+        private $admin_pages;
+        private $sub_pages;
+        private $sections;
         
         public function __construct()
         {
@@ -46,7 +45,7 @@
                 ]
             ];
             
-            $this->settings = [
+            $this->sections = [
                 [
                     'id'       => 'test_page_settings',
                     'title'    => 'Example settings section in reading',
@@ -69,20 +68,22 @@
                 array(
                     $this,
                     'admin_menu'
-                ) );
+                )
+            );
             
             add_action(
                 'admin_init',
                 array(
                     $this,
                     'register_settings'
-                ) );
+                )
+            );
         }
         
         public function register_settings(): void
         {
             //register all defined sections and its according settings
-            foreach ( $this->settings as $section )
+            foreach ( $this->sections as $section )
             {
                 add_settings_section(
                     $section['id'],
@@ -91,13 +92,15 @@
                         Page::class,
                         'settings_section'
                     ),
-                    $section['page'] );
+                    $section['page']
+                );
                 
                 foreach ( $section['settings'] as $setting_id => $setting_title )
                 {
                     register_setting(
                         $section['page'],
-                        $setting_id );
+                        $setting_id
+                    );
                     
                     add_settings_field(
                         $setting_id,
@@ -110,7 +113,8 @@
                         $section['id'],
                         [
                             'name' => $setting_id,
-                        ] );
+                        ]
+                    );
                 }
             }
         }
@@ -127,7 +131,8 @@
                     array(
                         Page::class,
                         'settings'
-                    ) );
+                    )
+                );
             }
             
             foreach ( $this->admin_pages as $admin_page )
@@ -142,7 +147,8 @@
                         'settings'
                     ),
                     $admin_page['icon_url'],
-                    $admin_page['position'] );
+                    $admin_page['position']
+                );
             }
             
             foreach ( $this->sub_pages as $sub_page )
@@ -156,7 +162,8 @@
                     array(
                         Page::class,
                         'settings'
-                    ) );
+                    )
+                );
             }
         }
     }
