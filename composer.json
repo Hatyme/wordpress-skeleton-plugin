@@ -1,0 +1,17 @@
+{
+    "name": "hatyme/hatyme-plugin",
+    "description": "testing",
+    "type": "project",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Hatyme",
+            "email": "richard@snuzz.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}
+    }
+}
